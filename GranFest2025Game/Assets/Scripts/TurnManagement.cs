@@ -6,6 +6,7 @@ public class TurnManagement : MonoBehaviour
 
     private int currentTurn = 1;
     [SerializeField] private BezierCurve curve;
+    [SerializeField] private HazardSpawner hazards;
     [SerializeField] private float playerDrawAmmount;
 
     [HideInInspector] public float drawAmount1;
@@ -102,6 +103,7 @@ public class TurnManagement : MonoBehaviour
         {
             currentTurn++;
             curve.StartTrack();
+            hazards.SpawnHazards();
         }
     }
 }
