@@ -57,9 +57,19 @@ public class TouchControlExample : MonoBehaviour
         GameObject newPoint = Instantiate(trackPointPrefab);
         Vector3 newPos = Camera.main.ScreenToWorldPoint(_touchPoint);
         newPoint.transform.position = new Vector3(newPos.x, 0, newPos.z);
-        lastPoint = newPoint.transform;
         currentPointStep = pointStep;
         points = points.Append(newPoint.transform).ToArray();
+        LineRenderer line = newPoint.GetComponent<LineRenderer>();
+        line.SetPosition(0, newPoint.transform.position);
+        if (lastPoint != null)
+        {
+            line.SetPosition(1, lastPoint.transform.position);
+        }
+        else
+        {
+            line.enabled = false;
+        }
+        lastPoint = newPoint.transform;
         TurnManagement.instance.DecrementDrawAmmount();
         curve.SetTrack(points);
     }
