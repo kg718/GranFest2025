@@ -6,20 +6,31 @@ using UnityEngine;
 
 public class BezierCurve : MonoBehaviour
 {
+    [SerializeField]
     private Transform[] points;
 
     public GameObject carObj;
     
     private Vector3 targetPosition;
 
+    private int indexCount;
 
 
-    public void SetPath(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+
+    private void Start()
     {
-        points[0].position = p0;
-        points[1].position = p1;
-        points[2].position = p2;
-        points[3].position = p3;
+        //SetTrack(points);
+        StartTrack();
+    }
+
+    public void SetTrack(Transform[] p)
+    {
+   
+        for (int i = 0; i < p.Length; i++) 
+        {
+            points[i].position = new Vector3(p[i].position.x, p[i].position.y, p[i].position.z);
+        }
+       
     }
 
 
@@ -33,6 +44,7 @@ public class BezierCurve : MonoBehaviour
     private void Update()
     {
         carObj.transform.position = targetPosition;
+
     }
 
 
@@ -50,10 +62,24 @@ public class BezierCurve : MonoBehaviour
             float lerp = Mathf.Lerp(0, 1, t);
 
             elapsedTime += Time.deltaTime;
-            targetPosition =calBezPoint(lerp, points[0].position, points[1].position, points[2].position, points[3].position);
+
+            targetPosition =calBezPoint(lerp, points[0 +indexCount].position, points[1 + indexCount].position, points[2 + indexCount].position, points[3 + indexCount].position);
 
             yield return new WaitForEndOfFrame();
+
+            if(elapsedTime > duration)
+            {
+                if (points.Length > indexCount + indexCount)
+                {
+                    indexCount += 4;
+                    StartTrack();
+                }
+               
+            }
+                
         }
+       
+        
       
     }
 
