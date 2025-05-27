@@ -100,5 +100,28 @@ public class BezierCurve : MonoBehaviour
 
         return p;
     }
+
+
+    private void OnDrawGizmos()
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+
+            switch(i)
+            {
+                case 0: Gizmos.color = Color.yellow; break;
+                case 1: Gizmos.color = Color.green; break;
+                case 2: Gizmos.color = Color.red; break;
+                case 3: Gizmos.color = Color.cyan; break;
+
+            }
+
+            Matrix4x4 mat = Gizmos.matrix;
+            Gizmos.matrix = Matrix4x4.TRS(points[i].position, Quaternion.identity, Vector3.one);
+            Gizmos.DrawSphere(Vector3.zero, 1f);
+            Gizmos.matrix = mat;
+        }
+
+    }
 }
 
