@@ -78,11 +78,11 @@ public class BezierCurve : MonoBehaviour
 
             if(elapsedTime > duration)
             {
-                var newPos = indexCount + 4;
-                if (points.Length > newPos + 1 && points.Length > newPos + 4)
+                var newPos = indexCount + 3;
+                if (points.Length > newPos + 1 && points.Length > newPos + 3)
                 {
                     canRun = true;
-                    indexCount += 4;
+                    indexCount += 3;
                     StartTrack();
                     yield return new WaitForEndOfFrame();
                     print("sdbvdfuwqa");
