@@ -5,6 +5,7 @@ public class TurnManagement : MonoBehaviour
     public static TurnManagement instance;
 
     private int currentTurn = 1;
+    [SerializeField] private BezierCurve curve;
     [SerializeField] private float playerDrawAmmount;
 
     [HideInInspector] public float drawAmount1;
@@ -85,6 +86,8 @@ public class TurnManagement : MonoBehaviour
                     return false;
                 }
                 break;
+            default:
+                return false;
         }
         return true;
     }
@@ -94,6 +97,11 @@ public class TurnManagement : MonoBehaviour
         if(currentTurn <= 3)
         {
             currentTurn++;
+        }
+        else if(currentTurn ==4)
+        {
+            currentTurn++;
+            curve.StartTrack();
         }
     }
 }

@@ -15,28 +15,38 @@ public class BezierCurve : MonoBehaviour
 
     private int indexCount;
 
+    [SerializeField] private float duration;
+
+    private bool canRun = true;
+
 
 
     private void Start()
     {
         //SetTrack(points);
-        StartTrack();
+        //StartTrack();
     }
 
     public void SetTrack(Transform[] p)
     {
-   
-        for (int i = 0; i < p.Length; i++) 
-        {
-            points[i].position = new Vector3(p[i].position.x, p[i].position.y, p[i].position.z);
-        }
+        points = new Transform[p.Length];
+        points = p;
+
+        //for (int i = 0; i < p.Length; i++) 
+        //{
+        //    points[i].position = new Vector3(p[i].position.x, p[i].position.y, p[i].position.z);
+        //}
        
     }
 
 
     public void StartTrack()
     {
-        StartCoroutine(followTrack());
+        if (canRun)
+        {
+            StartCoroutine(followTrack());
+            canRun = false;
+        }
     }
 
 
@@ -54,10 +64,9 @@ public class BezierCurve : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        float duration = 5;
-
         while (elapsedTime < duration)
         {
+            print("aaaa");
             float t = elapsedTime / duration;
             float lerp = Mathf.Lerp(0, 1, t);
 
@@ -69,12 +78,15 @@ public class BezierCurve : MonoBehaviour
 
             if(elapsedTime > duration)
             {
-                if (points.Length > indexCount + indexCount)
+                var newPos = indexCount + 4;
+                if (points.Length > newPos + 1 && points.Length > newPos + 4)
                 {
+                    canRun = true;
                     indexCount += 4;
                     StartTrack();
+                    yield return new WaitForEndOfFrame();
+                    print("sdbvdfuwqa");
                 }
-               
             }
                 
         }
@@ -118,7 +130,7 @@ public class BezierCurve : MonoBehaviour
 
             Matrix4x4 mat = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(points[i].position, Quaternion.identity, Vector3.one);
-            Gizmos.DrawSphere(Vector3.zero, 1f);
+            Gizmos.DrawSphere(Vector3.zero, 0.2f);
             Gizmos.matrix = mat;
         }
 
