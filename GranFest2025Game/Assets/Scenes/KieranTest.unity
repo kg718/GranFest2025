@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curve: {fileID: 998261807}
+  hazards: {fileID: 842272624}
   playerDrawAmmount: 40
   drawAmount1: 0
   drawAmount2: 0
