@@ -1,7 +1,8 @@
 using System.Collections;
+using UnityEditor.Search;
 using UnityEngine;
 
-//[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(LineRenderer))]
 
 public class BezierCurve : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class BezierCurve : MonoBehaviour
     public GameObject carObj;
     
     private Vector3 targetPosition, targetDirection;
+    private Vector3 lastTargetPosition;
 
     private int indexCount;
 
@@ -18,21 +20,31 @@ public class BezierCurve : MonoBehaviour
 
     private bool canRun = true;
 
-  //  private LineRenderer lineRenderer;
-    //private int curveCount;
+    private LineRenderer lineRenderer;
+    private int curveCount;
 
     [SerializeField]
     private float speed;
-    
+    private float savedSpeed;
+
+    private Vector3 lastPos, currentPos;
+
+    private float speedFactor = 1;
+
+
+    public bool isObstructed = false;
+
+    private float savedElapsedTime = 0;
 
     private void Awake()
     {
-      //  lineRenderer = GetComponent<LineRenderer>();
-       // curveCount = (int)(points.Length - 1) / 3;
+        lineRenderer = GetComponent<LineRenderer>();
+        curveCount = (int)(points.Length - 1) / 3;
     }
     private void Start()
     {
         //SetTrack(points);
+        savedSpeed = speed;
         StartTrack();
     }
 
@@ -41,14 +53,14 @@ public class BezierCurve : MonoBehaviour
         points = new Transform[p.Length];
         points = p;
 
-        //curveCount = (int)(p.Length -1) / 3;
+        curveCount = (int)(p.Length -1) / 3;
        
     }
 
 
     public void StartTrack()
     {
-        if (canRun)
+        if (canRun )
         {
             StartCoroutine(followTrack());
             canRun = false;
@@ -59,10 +71,8 @@ public class BezierCurve : MonoBehaviour
 
     private void Update()
     {
-        carObj.transform.position = targetPosition;
-        carObj.transform.rotation = Quaternion.LookRotation(targetDirection);
+
         Debug.DrawRay(carObj.transform.position ,carObj.transform.position + targetDirection, Color.green);
-       
 
     }
 
@@ -86,30 +96,53 @@ public class BezierCurve : MonoBehaviour
             linepos[i] = calBezPoint(t, p0, p1, p2, p3);
         }
 
-        //lineRenderer.positionCount = linePoints;
-        //lineRenderer.SetPositions(linepos);
+        lineRenderer.positionCount = linePoints;
+        lineRenderer.SetPositions(linepos);
 
         float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
 
-        float elapsedTime = 0;
+
+        float elapsedTime = 0 + savedElapsedTime;
         while (elapsedTime < 1)
         {
-           // print("aaaa");
-            float t = elapsedTime / 1;
-            float lerp = Mathf.Lerp(0, 1, t);
-            
+            if (isObstructed)
+            {
+                savedElapsedTime = elapsedTime;
+                canRun = true;
+                break;
+                
+            }
 
-            elapsedTime += Time.deltaTime / distDependantSpeed * speed;
+            float t = elapsedTime / 1;
+
+
+            float lerp = Mathf.Lerp(0, 1, t);
+
+            float speedCal = calSpeed();
+
+            
+         
+            elapsedTime += Time.deltaTime * speedCal * speed;
+
+            lastTargetPosition = targetPosition;
 
             targetDirection = calBezCurve(lerp, p0, p1, p2, p3);
 
             targetPosition = calBezPoint(lerp, p0, p1, p2, p3);
 
-      
+            float lerpX = Mathf.Lerp(lastTargetPosition.x, targetPosition.x, Time.deltaTime);
+            float lerpZ = Mathf.Lerp(lastTargetPosition.z, targetPosition.z, Time.deltaTime);
+
+            Vector3 lerpPos = new Vector3(lerpX, 0, lerpZ);
+
+            carObj.transform.position = lerpPos;
+            carObj.transform.rotation = Quaternion.LookRotation(targetDirection);
+
             yield return new WaitForEndOfFrame();
 
-            if(elapsedTime > 1)
+            if(elapsedTime > 1 )
             {
+                savedElapsedTime = 0;
                 var newPos = indexCount + 3;
                 if (points.Length > newPos + 1 && points.Length > newPos + 3)
                 {
@@ -123,6 +156,34 @@ public class BezierCurve : MonoBehaviour
                 
         }
       
+    }
+
+    float calSpeed()
+    {
+       lastPos = currentPos;
+        currentPos = carObj.transform.position;
+
+        //print("lastPos : " + lastPos);
+        //print("currentPos : " + currentPos);
+
+        float stepSize = Vector3.Magnitude(currentPos - lastPos);
+        float targetStepSize = 0.02f;
+
+       // print("STEP SIZE : " + stepSize);
+        if (stepSize < targetStepSize)
+        {
+            speedFactor *= 1.1f;
+          //  print("Speed Factor Increase : " + speedFactor);
+        }
+        else
+        {
+          //  print("Speed Factor Decrease : " + speedFactor);
+
+            speedFactor *= 0.9f;
+        }
+        return speedFactor * Time.deltaTime;
+
+  
     }
 
     float calPointDistance(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
