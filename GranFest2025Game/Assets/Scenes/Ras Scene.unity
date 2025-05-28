@@ -227,7 +227,8 @@ MonoBehaviour:
   - {fileID: 1158364805}
   carObj: {fileID: 1055657918}
   duration: 2.74
-  speed: 0.21
+  speed: 0.2
+  isObstructed: 0
 --- !u!4 &377818350
 Transform:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: c8ba7e1c938f6394fb6b137bdab9a094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
