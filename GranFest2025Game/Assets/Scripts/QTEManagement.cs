@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class QTEManagement : MonoBehaviour
 {
+    public static QTEManagement Instance;
+
     [SerializeField] private Transform panel;
     [SerializeField] private GameObject QTEButton;
     [SerializeField] private float yMax;
@@ -11,6 +13,7 @@ public class QTEManagement : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         StopHazardDelegate del = Test;
         CreateQTE(del, 1);
     }
