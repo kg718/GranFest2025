@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
+//[RequireComponent(typeof(LineRenderer))]
 
 public class BezierCurve : MonoBehaviour
 {
@@ -18,8 +18,8 @@ public class BezierCurve : MonoBehaviour
 
     private bool canRun = true;
 
-    private LineRenderer lineRenderer;
-    private int curveCount;
+  //  private LineRenderer lineRenderer;
+    //private int curveCount;
 
     [SerializeField]
     private float speed;
@@ -27,7 +27,7 @@ public class BezierCurve : MonoBehaviour
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+      //  lineRenderer = GetComponent<LineRenderer>();
        // curveCount = (int)(points.Length - 1) / 3;
     }
     private void Start()
@@ -41,7 +41,7 @@ public class BezierCurve : MonoBehaviour
         points = new Transform[p.Length];
         points = p;
 
-        curveCount = (int)(p.Length -1) / 3;
+        //curveCount = (int)(p.Length -1) / 3;
        
     }
 
@@ -86,8 +86,8 @@ public class BezierCurve : MonoBehaviour
             linepos[i] = calBezPoint(t, p0, p1, p2, p3);
         }
 
-        lineRenderer.positionCount = linePoints;
-        lineRenderer.SetPositions(linepos);
+        //lineRenderer.positionCount = linePoints;
+        //lineRenderer.SetPositions(linepos);
 
         float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
 
