@@ -77,8 +77,6 @@ public class BezierCurve : MonoBehaviour
     }
 
 
-    
-
     IEnumerator followTrack()
     {
         Vector3 p0 = points[indexCount + 0].position;
@@ -86,20 +84,29 @@ public class BezierCurve : MonoBehaviour
         Vector3 p2 = points[indexCount + 2].position;
         Vector3 p3 = points[indexCount + 3].position;
 
-        int linePoints = 30;
-
-        Vector3[] linepos = new Vector3[linePoints];
-
-        for (int i = 0; i < linePoints; i++)
+      
+        int linePoints = 10;
+        int totalPathCount = (points.Length - 5);
+        int totalLinePoints = totalPathCount * linePoints;
+        Vector3[] linepos = new Vector3[totalLinePoints];
+        
+        
+        for (int j = 0; j < totalPathCount;j++)
         {
-            float t = i / (float)(linePoints - 1);
-            linepos[i] = calBezPoint(t, p0, p1, p2, p3);
+            Vector3 b0 = points[j + 0].position;
+            Vector3 b1 = points[j + 1].position;
+            Vector3 b2 = points[j + 2].position;
+            Vector3 b3 = points[j + 3].position;
+
+            float t = j / (float)(totalPathCount - 1);
+            linepos[j] = calBezPoint(t, b0, b1, b2, b3);
+
         }
 
-        lineRenderer.positionCount = linePoints;
+        lineRenderer.positionCount = totalPathCount * linePoints;
         lineRenderer.SetPositions(linepos);
 
-        float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
+        //float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
 
 
         float elapsedTime = 0 + savedElapsedTime;
@@ -204,7 +211,7 @@ public class BezierCurve : MonoBehaviour
         //print("d2 " + d2);
 
         float sum = (d0 + d1 + d2) / 3;
-        print("sum" + sum);
+        //print("sum" + sum);
         return sum;
     }
 
@@ -243,9 +250,6 @@ public class BezierCurve : MonoBehaviour
         Gizmos.color = Color.green;
         for (int i = 0; i < points.Length; i++)
         {
-
-
-
             Matrix4x4 mat = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(points[i].position, Quaternion.identity, Vector3.one);
             Gizmos.DrawSphere(Vector3.zero, 0.2f);
