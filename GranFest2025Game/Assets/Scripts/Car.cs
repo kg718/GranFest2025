@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
+    [SerializeField] private BezierCurve curve;
     [SerializeField] private int playerNumber;
     [SerializeField] private float QTESuccessTime;
+    [SerializeField] private float CrashTime;
     private float currentQTETime;
+    private float currentCrashTime;
     bool canBeHit = true;
     QTEManagement.StopHazardDelegate stopHazard;
+    private bool iscrashed = false;
 
     private void Start()
     {
         currentQTETime = QTESuccessTime;
+        currentCrashTime = CrashTime;
         stopHazard = OnPressQTE;
     }
 
@@ -24,18 +29,28 @@ public class Car : MonoBehaviour
         {
             canBeHit = true;
         }
+        if (currentCrashTime > 0)
+        {
+            currentCrashTime -= Time.deltaTime;
+        }
+        else
+        {
+            UnCrash();
+        }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        print(other.name);
         if(other.gameObject.tag == "Warning")
         {
             QTEManagement.Instance.CreateQTE(stopHazard,playerNumber);
         }
         if(other.gameObject.tag == "Hazard" && canBeHit)
         {
-            
+            print("crash");
+            curve.isObstructed = true;
+            currentCrashTime = CrashTime;
+            iscrashed = true;
         }
     }
 
@@ -49,8 +64,18 @@ public class Car : MonoBehaviour
 
     public void OnPressQTE(int i)
     {
-        print(i);
         currentQTETime = QTESuccessTime;
         canBeHit = false;
+        UnCrash();
+    }
+
+    public void UnCrash()
+    {
+        if (iscrashed)
+        {
+            curve.isObstructed = false;
+            curve.StartTrack();
+            iscrashed = false;
+        }
     }
 }

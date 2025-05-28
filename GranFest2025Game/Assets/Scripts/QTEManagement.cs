@@ -15,7 +15,7 @@ public class QTEManagement : MonoBehaviour
     {
         Instance = this;
         StopHazardDelegate del = Test;
-        CreateQTE(del, 1);
+        //CreateQTE(del, 1);
     }
 
     public void CreateQTE(StopHazardDelegate _method, int _playerNumber)
