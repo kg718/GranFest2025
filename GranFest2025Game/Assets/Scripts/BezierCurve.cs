@@ -20,19 +20,20 @@ public class BezierCurve : MonoBehaviour
 
     private LineRenderer lineRenderer;
     private int curveCount;
+
+    [SerializeField]
+    private float speed;
     
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        curveCount = (int)(points.Length - 1) / 3;
+       // curveCount = (int)(points.Length - 1) / 3;
     }
     private void Start()
     {
         //SetTrack(points);
         StartTrack();
-
-       
     }
 
     public void SetTrack(Transform[] p)
@@ -88,14 +89,17 @@ public class BezierCurve : MonoBehaviour
         lineRenderer.positionCount = linePoints;
         lineRenderer.SetPositions(linepos);
 
-        float elapsedTime = 0;
-        while (elapsedTime < duration)
-        {
-            print("aaaa");
-            float t = elapsedTime / duration;
-            float lerp = Mathf.Lerp(0, 1, t);
+        float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
 
-            elapsedTime += Time.deltaTime;
+        float elapsedTime = 0;
+        while (elapsedTime < 1)
+        {
+           // print("aaaa");
+            float t = elapsedTime / 1;
+            float lerp = Mathf.Lerp(0, 1, t);
+            
+
+            elapsedTime += Time.deltaTime / distDependantSpeed * speed;
 
             targetDirection = calBezCurve(lerp, p0, p1, p2, p3);
 
@@ -104,7 +108,7 @@ public class BezierCurve : MonoBehaviour
       
             yield return new WaitForEndOfFrame();
 
-            if(elapsedTime > duration)
+            if(elapsedTime > 1)
             {
                 var newPos = indexCount + 3;
                 if (points.Length > newPos + 1 && points.Length > newPos + 3)
@@ -121,6 +125,28 @@ public class BezierCurve : MonoBehaviour
       
     }
 
+    float calPointDistance(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {
+        p0 = p0.normalized;
+        p1 = p1.normalized;
+        p2 = p2.normalized;
+        p3 = p3.normalized;
+
+        float d0 = Mathf.Sqrt((p1.x - p0.x) * (p1.x - p0.x) + ((p1.z - p0.z) * (p1.z - p0.z)));
+        float d1 = Mathf.Sqrt((p2.x - p1.x) * (p2.x - p1.x) + ((p2.z - p1.z) * (p2.z - p1.z)));
+        float d2 = Mathf.Sqrt((p3.x - p2.x) * (p3.x - p2.x) + ((p3.z - p2.z) * (p3.z - p2.z)));
+
+        //float d0 = p1.magnitude - p0.magnitude;
+        //float d1 = p2.magnitude - p1.magnitude;
+        //float d2 = p3.magnitude - p2.magnitude;
+        //print("d0 " + d0);
+        //print("d1 " + d1);
+        //print("d2 " + d2);
+
+        float sum = (d0 + d1 + d2) / 3;
+        print("sum" + sum);
+        return sum;
+    }
 
     Vector3 calBezPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
