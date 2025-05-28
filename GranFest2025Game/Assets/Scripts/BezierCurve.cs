@@ -39,13 +39,13 @@ public class BezierCurve : MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        curveCount = (int)(points.Length - 1) / 3;
+        //curveCount = (int)(points.Length - 1) / 3;
     }
     private void Start()
     {
         //SetTrack(points);
         savedSpeed = speed;
-        StartTrack();
+        //StartTrack();
     }
 
     public void SetTrack(Transform[] p)
@@ -150,7 +150,6 @@ public class BezierCurve : MonoBehaviour
                     indexCount += 3;
                     StartTrack();
                     yield return new WaitForEndOfFrame();
-                    print("sdbvdfuwqa");
                 }
             }
                 
@@ -167,7 +166,7 @@ public class BezierCurve : MonoBehaviour
         //print("currentPos : " + currentPos);
 
         float stepSize = Vector3.Magnitude(currentPos - lastPos);
-        float targetStepSize = 0.02f;
+        float targetStepSize = 0.002f;
 
        // print("STEP SIZE : " + stepSize);
         if (stepSize < targetStepSize)
