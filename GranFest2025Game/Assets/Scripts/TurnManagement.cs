@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManagement : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class TurnManagement : MonoBehaviour
     [HideInInspector] public float drawAmount3;
     [HideInInspector] public float drawAmount4;
 
+    [SerializeField] private Slider drawSlider1;
+    [SerializeField] private Slider drawSlider2;
+    [SerializeField] private Slider drawSlider3;
+    [SerializeField] private Slider drawSlider4;
+
     void Start()
     {
         instance = this;
@@ -21,6 +27,14 @@ public class TurnManagement : MonoBehaviour
         drawAmount2 = playerDrawAmmount;
         drawAmount3 = playerDrawAmmount;
         drawAmount4 = playerDrawAmmount;
+        drawSlider1.maxValue = playerDrawAmmount;
+        drawSlider1.value = playerDrawAmmount;
+        drawSlider2.maxValue = playerDrawAmmount;
+        drawSlider2.value = playerDrawAmmount;
+        drawSlider3.maxValue = playerDrawAmmount;
+        drawSlider3.value = playerDrawAmmount;
+        drawSlider4.maxValue = playerDrawAmmount;
+        drawSlider4.value = playerDrawAmmount;
     }
 
     void Update()
@@ -36,24 +50,28 @@ public class TurnManagement : MonoBehaviour
                 if (drawAmount1 >= 0)
                 {
                     drawAmount1--;
+                    drawSlider1.value = drawAmount1;
                 }
                 break;
             case 2:
                 if (drawAmount2 >= 0)
                 {
                     drawAmount2--;
+                    drawSlider2.value = drawAmount2;
                 }
                 break;
             case 3:
                 if (drawAmount3 >= 0)
                 {
                     drawAmount3--;
+                    drawSlider3.value = drawAmount3;
                 }
                 break;
             case 4:
                 if (drawAmount4 >= 0)
                 {
                     drawAmount4--;
+                    drawSlider4.value = drawAmount4;
                 }
                 break;
         }

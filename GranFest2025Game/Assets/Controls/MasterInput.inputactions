@@ -1,0 +1,34 @@
+{
+    "name": "MasterInput",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "a41f3b7e-e3bd-4325-b1a2-a90a70cf5eeb",
+            "actions": [
+                {
+                    "name": "Quit",
+                    "type": "Button",
+                    "id": "61b480bd-80aa-4da7-9c1e-b6fd6faf2306",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fe8943c3-2f08-4e35-a8b9-1a6ff05a573b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
