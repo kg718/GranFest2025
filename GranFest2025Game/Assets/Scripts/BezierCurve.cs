@@ -1,8 +1,7 @@
 using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 
 public class BezierCurve : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class BezierCurve : MonoBehaviour
 
     public GameObject carObj;
     
-    private Vector3 targetPosition;
+    private Vector3 targetPosition, targetDirection;
 
     private int indexCount;
 
@@ -19,12 +18,21 @@ public class BezierCurve : MonoBehaviour
 
     private bool canRun = true;
 
+    private LineRenderer lineRenderer;
+    private int curveCount;
+    
 
-
+    private void Awake()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        curveCount = (int)(points.Length - 1) / 3;
+    }
     private void Start()
     {
         //SetTrack(points);
-        //StartTrack();
+        StartTrack();
+
+       
     }
 
     public void SetTrack(Transform[] p)
@@ -32,10 +40,7 @@ public class BezierCurve : MonoBehaviour
         points = new Transform[p.Length];
         points = p;
 
-        //for (int i = 0; i < p.Length; i++) 
-        //{
-        //    points[i].position = new Vector3(p[i].position.x, p[i].position.y, p[i].position.z);
-        //}
+        curveCount = (int)(p.Length -1) / 3;
        
     }
 
@@ -54,16 +59,36 @@ public class BezierCurve : MonoBehaviour
     private void Update()
     {
         carObj.transform.position = targetPosition;
+        carObj.transform.rotation = Quaternion.LookRotation(targetDirection);
+        Debug.DrawRay(carObj.transform.position ,carObj.transform.position + targetDirection, Color.green);
+       
 
     }
 
 
-
+    
 
     IEnumerator followTrack()
     {
-        float elapsedTime = 0;
+        Vector3 p0 = points[indexCount + 0].position;
+        Vector3 p1 = points[indexCount + 1].position;
+        Vector3 p2 = points[indexCount + 2].position;
+        Vector3 p3 = points[indexCount + 3].position;
 
+        int linePoints = 30;
+
+        Vector3[] linepos = new Vector3[linePoints];
+
+        for (int i = 0; i < linePoints; i++)
+        {
+            float t = i / (float)(linePoints - 1);
+            linepos[i] = calBezPoint(t, p0, p1, p2, p3);
+        }
+
+        lineRenderer.positionCount = linePoints;
+        lineRenderer.SetPositions(linepos);
+
+        float elapsedTime = 0;
         while (elapsedTime < duration)
         {
             print("aaaa");
@@ -72,8 +97,11 @@ public class BezierCurve : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
 
-            targetPosition =calBezPoint(lerp, points[0 +indexCount].position, points[1 + indexCount].position, points[2 + indexCount].position, points[3 + indexCount].position);
+            targetDirection = calBezCurve(lerp, p0, p1, p2, p3);
 
+            targetPosition = calBezPoint(lerp, p0, p1, p2, p3);
+
+      
             yield return new WaitForEndOfFrame();
 
             if(elapsedTime > duration)
@@ -90,8 +118,6 @@ public class BezierCurve : MonoBehaviour
             }
                 
         }
-       
-        
       
     }
 
@@ -113,27 +139,34 @@ public class BezierCurve : MonoBehaviour
         return p;
     }
 
+    Vector3 calBezCurve(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    {// this is a tangent 
+        float u = 1 - t;
+
+        Vector3 p =
+            3 * u * u * (p1 - p0) +
+            6 * u * t * (p2 - p1) +
+            3 * t * t * (p3 - p2);
+        
+        return p;
+    }
+
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.green;
         for (int i = 0; i < points.Length; i++)
         {
 
-            switch(i)
-            {
-                case 0: Gizmos.color = Color.yellow; break;
-                case 1: Gizmos.color = Color.green; break;
-                case 2: Gizmos.color = Color.red; break;
-                case 3: Gizmos.color = Color.cyan; break;
 
-            }
 
             Matrix4x4 mat = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(points[i].position, Quaternion.identity, Vector3.one);
             Gizmos.DrawSphere(Vector3.zero, 0.2f);
             Gizmos.matrix = mat;
         }
-
+    
+            
     }
 }
 
