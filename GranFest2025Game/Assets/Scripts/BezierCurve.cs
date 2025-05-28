@@ -54,6 +54,8 @@ public class BezierCurve : MonoBehaviour
         points = p;
 
         curveCount = (int)(p.Length -1) / 3;
+
+        SetLineRenderer();
        
     }
 
@@ -77,6 +79,36 @@ public class BezierCurve : MonoBehaviour
     }
 
 
+    private void SetLineRenderer()
+    {
+
+        //int linePoints = 10;
+        int totalPathCount = (points.Length);
+        int totalLinePoints = totalPathCount;
+        Vector3[] linepos = new Vector3[totalPathCount];
+
+
+        for (int j = 0; j < totalPathCount -3; j++)
+        {
+            Vector3 b0 = points[j + 0].position;
+            Vector3 b1 = points[j + 1].position;
+            Vector3 b2 = points[j + 2].position;
+            Vector3 b3 = points[j + 3].position;
+
+            
+            for (int k = 0; k < 4; k++)
+            {
+                float t = j / (float)(totalPathCount - 1);
+                linepos[j + k] = calBezPoint(t, b0, b1, b2, b3);
+                print(linepos[k +k]);
+
+            }
+        }
+
+        lineRenderer.positionCount = totalLinePoints;
+        lineRenderer.SetPositions(linepos);
+    }
+
     IEnumerator followTrack()
     {
         Vector3 p0 = points[indexCount + 0].position;
@@ -85,30 +117,6 @@ public class BezierCurve : MonoBehaviour
         Vector3 p3 = points[indexCount + 3].position;
 
       
-        int linePoints = 10;
-        int totalPathCount = (points.Length - 5);
-        int totalLinePoints = totalPathCount * linePoints;
-        Vector3[] linepos = new Vector3[totalLinePoints];
-        
-        
-        for (int j = 0; j < totalPathCount;j++)
-        {
-            Vector3 b0 = points[j + 0].position;
-            Vector3 b1 = points[j + 1].position;
-            Vector3 b2 = points[j + 2].position;
-            Vector3 b3 = points[j + 3].position;
-
-            float t = j / (float)(totalPathCount - 1);
-            linepos[j] = calBezPoint(t, b0, b1, b2, b3);
-
-        }
-
-        lineRenderer.positionCount = totalPathCount * linePoints;
-        lineRenderer.SetPositions(linepos);
-
-        //float distDependantSpeed = calPointDistance(p0, p1, p2, p3);
-
-
         float elapsedTime = 0 + savedElapsedTime;
         while (elapsedTime < 1)
         {
@@ -157,6 +165,10 @@ public class BezierCurve : MonoBehaviour
                     indexCount += 3;
                     StartTrack();
                     yield return new WaitForEndOfFrame();
+                }
+                else
+                {
+                    points[points.Length].transform.position = points[0].transform.position; 
                 }
             }
                 
