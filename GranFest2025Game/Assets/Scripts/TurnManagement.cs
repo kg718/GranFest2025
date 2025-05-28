@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TurnManagement : MonoBehaviour
 {
     public static TurnManagement instance;
+
+    [SerializeField] private TouchControlExample touchControl;
 
     private int currentTurn = 1;
     [SerializeField] private BezierCurve curve;
@@ -20,6 +24,14 @@ public class TurnManagement : MonoBehaviour
     [SerializeField] private Slider drawSlider3;
     [SerializeField] private Slider drawSlider4;
 
+    [SerializeField] private Color defaultColour = Color.white;
+    [SerializeField] private Color yourTurnColour = Color.white;
+    [SerializeField] private Color turnOverColour = Color.white;
+    [SerializeField] private Image turnImage1;
+    [SerializeField] private Image turnImage2;
+    [SerializeField] private Image turnImage3;
+    [SerializeField] private Image turnImage4;
+
     void Start()
     {
         instance = this;
@@ -35,6 +47,7 @@ public class TurnManagement : MonoBehaviour
         drawSlider3.value = playerDrawAmmount;
         drawSlider4.maxValue = playerDrawAmmount;
         drawSlider4.value = playerDrawAmmount;
+        UpdateTurnColours();
     }
 
     void Update()
@@ -123,5 +136,48 @@ public class TurnManagement : MonoBehaviour
             curve.StartTrack();
             hazards.SpawnHazards();
         }
+        UpdateTurnColours();
+    }
+
+    public void UpdateTurnColours()
+    {
+        switch (currentTurn)
+        {
+            case 1:
+                turnImage1.color = yourTurnColour;
+                turnImage2.color = defaultColour;
+                turnImage3.color = defaultColour;
+                turnImage4.color = defaultColour;
+                break;
+            case 2:
+                turnImage1.color = turnOverColour;
+                turnImage2.color = yourTurnColour;
+                turnImage3.color = defaultColour;
+                turnImage4.color = defaultColour;
+                break;
+            case 3:
+                turnImage1.color = turnOverColour;
+                turnImage2.color = turnOverColour;
+                turnImage3.color = yourTurnColour;
+                turnImage4.color = defaultColour;
+                break;
+            case 4:
+                turnImage1.color = turnOverColour;
+                turnImage2.color = turnOverColour;
+                turnImage3.color = turnOverColour;
+                turnImage4.color = yourTurnColour;
+                break;
+            default:
+                turnImage1.color = defaultColour;
+                turnImage2.color = defaultColour;
+                turnImage3.color = defaultColour;
+                turnImage4.color = defaultColour;
+                break;
+        }
+    }
+
+    public int GetTurn()
+    {
+        return currentTurn;
     }
 }
