@@ -43,5 +43,6 @@ public class FinishGame : MonoBehaviour
                 winnerText.text = "Winner: Red Rabbit Racing";
                 break;
         }
+        finishSound.Play();
     }
 }
