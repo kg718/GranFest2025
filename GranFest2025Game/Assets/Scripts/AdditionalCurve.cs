@@ -101,7 +101,7 @@ public class AdditionalCurve : BezierCurve
 
 
 
-            elapsedTime += Time.deltaTime * speedCal * speed;
+            elapsedTime += Time.deltaTime * speedCal;
 
             lastTargetPosition = targetPosition;
 
@@ -149,7 +149,7 @@ public class AdditionalCurve : BezierCurve
         //print("currentPos : " + currentPos);
 
         float stepSize = Vector3.Magnitude(currentPos - lastPos);
-        float targetStepSize = 0.002f;
+        float targetStepSize = 0.002f / speed;
 
         // print("STEP SIZE : " + stepSize);
         if (stepSize < targetStepSize)

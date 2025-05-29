@@ -171,7 +171,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 507070727}
   duration: 0.5
-  speed: 0.005
+  speed: 0.02
   isObstructed: 0
 --- !u!120 &31757001
 LineRenderer:
@@ -1458,7 +1458,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 357721363}
   duration: 0.5
-  speed: 0.005
+  speed: 0.02
   isObstructed: 0
 --- !u!120 &562119138
 LineRenderer:
@@ -2683,7 +2683,7 @@ MonoBehaviour:
   - {fileID: 562119137}
   trackPointPrefab: {fileID: 4451164884743027305, guid: fa1390a4c413be040a155a326ec35c5a, type: 3}
   minDist: 0.2
-  pointStep: 0.005
+  pointStep: 0.02
   deadZones:
   - {x: 1000, y: 140, z: 1}
   - {x: 50, y: 60, z: 0}
@@ -3359,7 +3359,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 1232605905}
   duration: 0.5
-  speed: 0.005
+  speed: 0.02
   isObstructed: 0
 --- !u!120 &1163107939
 LineRenderer:

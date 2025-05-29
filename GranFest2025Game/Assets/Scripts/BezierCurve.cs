@@ -185,7 +185,7 @@ public class BezierCurve : MonoBehaviour
         //print("currentPos : " + currentPos);
 
         float stepSize = Vector3.Magnitude(currentPos - lastPos);
-        float targetStepSize = 0.002f;
+        float targetStepSize = 0.002f * speed;
 
        // print("STEP SIZE : " + stepSize);
         if (stepSize < targetStepSize)
