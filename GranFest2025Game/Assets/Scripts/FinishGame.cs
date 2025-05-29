@@ -8,6 +8,7 @@ public class FinishGame : MonoBehaviour
 
     [SerializeField] private GameObject victoryPanel;
     [SerializeField] private TextMeshProUGUI winnerText;
+    [SerializeField] private AudioSource finishSound;
 
     void Start()
     {
