@@ -171,7 +171,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 507070727}
   duration: 0.5
-  speed: 1.5
+  speed: 5
   isObstructed: 0
 --- !u!120 &31757001
 LineRenderer:
@@ -1188,7 +1188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781592017941598235, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5187760853098324714, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1428,7 +1428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781592017941598235, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5187760853098324714, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1697,7 +1697,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 357721363}
   duration: 0.5
-  speed: 1.5
+  speed: 5
   isObstructed: 0
 --- !u!120 &562119138
 LineRenderer:
@@ -2954,7 +2954,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 1979782139}
   duration: 0.5
-  speed: 16
+  speed: 5
   isObstructed: 0
 --- !u!120 &998261808
 LineRenderer:
@@ -3696,7 +3696,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 1232605905}
   duration: 0.5
-  speed: 1.5
+  speed: 5
   isObstructed: 0
 --- !u!120 &1163107939
 LineRenderer:
@@ -4365,7 +4365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781592017941598235, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7964510778178129177, guid: fe8db6058e30603448dabcb456d4a89b, type: 3}
       propertyPath: m_LocalPosition.x
