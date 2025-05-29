@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class AdditionalCurve : BezierCurve
@@ -28,6 +26,8 @@ public class AdditionalCurve : BezierCurve
     {
         if (canRun)
         {
+            
+
             StartCoroutine(followTrack());
             canRun = false;
         }
@@ -79,7 +79,7 @@ public class AdditionalCurve : BezierCurve
         Vector3 p1 = points[indexCount + 1].position;
         Vector3 p2 = points[indexCount + 2].position;
         Vector3 p3 = points[indexCount + 3].position;
-
+    
 
         float elapsedTime = 0 + savedElapsedTime;
         while (elapsedTime < 1)
@@ -101,7 +101,7 @@ public class AdditionalCurve : BezierCurve
 
 
 
-            elapsedTime += Time.deltaTime * speedCal;
+            elapsedTime += Time.deltaTime; //* speedCal;
 
             lastTargetPosition = targetPosition;
 
@@ -140,26 +140,36 @@ public class AdditionalCurve : BezierCurve
 
     }
 
+    private void nextCurve()
+    {
+        
+    }
+
+
     float calSpeed()
     {
         lastPos = currentPos;
         currentPos = carObj.transform.position;
 
-        //print("lastPos : " + lastPos);
-        //print("currentPos : " + currentPos);
-
         float stepSize = Vector3.Magnitude(currentPos - lastPos);
-        float targetStepSize = 0.002f / speed;
+        float distance = Mathf.Sqrt((lastPos.x - currentPos.x) * (lastPos.x - currentPos.x) + ((lastPos.z - currentPos.z) * (lastPos.z - currentPos.z)));
+
+        float velocity = distance / Time.deltaTime;
+       // print("velocity: " + velocity);
+        //float targetStepSize = speed; 
+        float targetStepSize = 0.001f; 
 
         // print("STEP SIZE : " + stepSize);
-        if (stepSize < targetStepSize)
+        if (distance < targetStepSize)
         {
+           //speedFactor = Mathf.Lerp(speedFactor, speedFactor * 1.1f, Time.deltaTime);
             speedFactor *= 1.1f;
             //  print("Speed Factor Increase : " + speedFactor);
         }
         else
         {
-            //  print("Speed Factor Decrease : " + speedFactor);
+            //print("Speed Factor Decrease : " + speedFactor);
+            //speedFactor = Mathf.Lerp(speedFactor, speedFactor * 0.9f, Time.deltaTime);
 
             speedFactor *= 0.9f;
         }
