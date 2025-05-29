@@ -24,7 +24,7 @@ public class QTEManagement : MonoBehaviour
         Qte _qte = _newBTN.GetComponent<Qte>();
         _qte.UpdateImage(_playerNumber);
         _newBTN.transform.SetParent(panel);
-        float randX = Random.Range(150,1000);
+        float randX = Random.Range(150,1500);
         float randY = Random.Range(120, yMax);
         _newBTN.GetComponent<RectTransform>().position = new Vector2(randX, randY);
         _newBTN.GetComponent<Button>().onClick.AddListener(delegate { _method(_playerNumber); });
