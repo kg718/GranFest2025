@@ -10,6 +10,10 @@ public class CoutDown : MonoBehaviour
     bool started = false;
 
     public UnityEvent OnGo;
+    [SerializeField] private AudioSource SFX1;
+    [SerializeField] private AudioSource SFX2;
+    [SerializeField] private AudioSource SFX3;
+    [SerializeField] private AudioSource SFXGo;
 
     void Start()
     {
@@ -35,6 +39,7 @@ public class CoutDown : MonoBehaviour
         {
             countText.gameObject.SetActive(true);
             started = true;
+            SFX3.Play();
         }
     }
 
@@ -42,11 +47,24 @@ public class CoutDown : MonoBehaviour
     {
         number--;
         countText.text = number.ToString();
+        switch(number)
+        {
+            case 3:
+                SFX3.Play();
+                break;
+            case 2:
+                SFX2.Play();
+                break;
+            case 1:
+                SFX1.Play();
+                break;
+        }
 
         if (number == 0)
         {
             countText.text = "GO!!!";
             OnGo.Invoke();
+            SFXGo.Play();
         }
         if (number < 0)
         {

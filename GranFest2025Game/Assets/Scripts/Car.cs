@@ -11,6 +11,7 @@ public class Car : MonoBehaviour
     bool canBeHit = true;
     QTEManagement.StopHazardDelegate stopHazard;
     private bool iscrashed = false;
+    [SerializeField] private AudioSource crashSFX;
 
     private void Start()
     {
@@ -51,6 +52,7 @@ public class Car : MonoBehaviour
             curve.isObstructed = true;
             currentCrashTime = CrashTime;
             iscrashed = true;
+            crashSFX.Play();
         }
     }
 
