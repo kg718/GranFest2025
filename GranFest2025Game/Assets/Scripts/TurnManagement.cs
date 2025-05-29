@@ -8,9 +8,11 @@ public class TurnManagement : MonoBehaviour
     public static TurnManagement instance;
 
     [SerializeField] private TouchControlExample touchControl;
+    [SerializeField] private CoutDown countDown;
 
     private int currentTurn = 1;
-    [SerializeField] private BezierCurve curve;
+    [SerializeField] private BezierCurve[] curves;
+    //[SerializeField] private BezierCurve curve;
     [SerializeField] private HazardSpawner hazards;
     [SerializeField] private float playerDrawAmmount;
 
@@ -130,10 +132,10 @@ public class TurnManagement : MonoBehaviour
         {
             currentTurn++;
         }
-        else if(currentTurn ==4)
+        else if(currentTurn == 4)
         {
-            currentTurn++;
-            curve.StartTrack();
+            countDown.StartCountDown();
+            //StartCars();
             hazards.SpawnHazards();
         }
         UpdateTurnColours();
@@ -179,5 +181,18 @@ public class TurnManagement : MonoBehaviour
     public int GetTurn()
     {
         return currentTurn;
+    }
+
+    public void StartCars()
+    {
+        currentTurn++;
+        foreach (BezierCurve _curve in curves)
+        {
+            _curve.StartTrack();
+        }
+        foreach (Transform t in touchControl.points)
+        {
+            t.gameObject.GetComponent<LineRenderer>().enabled = false;
+        }
     }
 }

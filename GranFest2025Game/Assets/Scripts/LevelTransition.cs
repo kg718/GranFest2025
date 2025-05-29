@@ -24,6 +24,6 @@ public class LevelTransition : MonoBehaviour
     IEnumerator LoadLevel()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(1);
     }
 }
