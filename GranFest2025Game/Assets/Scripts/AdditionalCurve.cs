@@ -19,7 +19,7 @@ public class AdditionalCurve : BezierCurve
 
         curveCount = (int)(p.Length - 1) / 3;
 
-        SetLineRenderer();
+        //SetLineRenderer();
 
     }
 
