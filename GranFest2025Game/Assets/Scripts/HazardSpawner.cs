@@ -16,7 +16,7 @@ public class HazardSpawner : MonoBehaviour
         {
             return;
         }
-        Instantiate(end, touchControl.points[touchControl.points.Length - 4].transform.position, Quaternion.identity);
+        Instantiate(end, touchControl.points[touchControl.points.Length - 2].transform.position, Quaternion.identity);
         for (int i = 0; i < touchControl.points.Length; i++)
         {
             if(i >= touchControl.points.Length - 8)
