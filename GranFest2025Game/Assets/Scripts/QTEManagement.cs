@@ -21,6 +21,8 @@ public class QTEManagement : MonoBehaviour
     public void CreateQTE(StopHazardDelegate _method, int _playerNumber)
     {
         GameObject _newBTN = Instantiate(QTEButton);
+        Qte _qte = _newBTN.GetComponent<Qte>();
+        _qte.UpdateImage(_playerNumber);
         _newBTN.transform.SetParent(panel);
         float randX = Random.Range(150,1000);
         float randY = Random.Range(60, yMax);

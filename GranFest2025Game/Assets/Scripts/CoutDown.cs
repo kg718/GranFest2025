@@ -40,7 +40,6 @@ public class CoutDown : MonoBehaviour
 
     private void TickDown()
     {
-        print("tick");
         number--;
         countText.text = number.ToString();
 

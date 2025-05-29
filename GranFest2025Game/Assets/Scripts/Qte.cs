@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Qte : MonoBehaviour
 {
+    [SerializeField] private Image image;
+    [SerializeField] private Sprite[] sprites;
 
     void Start()
     {
@@ -11,6 +14,11 @@ public class Qte : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void UpdateImage(int _sprite)
+    {
+        image.sprite = sprites[_sprite - 1];
     }
 
     public void DestroyQTE(float _DestroyTime)

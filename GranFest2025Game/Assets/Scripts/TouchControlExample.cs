@@ -14,7 +14,8 @@ public class TouchControlExample : MonoBehaviour
     [HideInInspector] public Transform[] pointsP3;
     [HideInInspector] public Transform[] pointsP4;
 
-    [SerializeField] private BezierCurve curve;
+    [SerializeField] private BezierCurve[] curves;
+    //[SerializeField] private BezierCurve curve;
     [SerializeField] private GameObject trackPointPrefab;
     [SerializeField] private float minDist;
     [SerializeField] private float pointStep;
@@ -113,7 +114,11 @@ public class TouchControlExample : MonoBehaviour
         }
         lastPoint = newPoint.transform;
         TurnManagement.instance.DecrementDrawAmmount();
-        curve.SetTrack(points);
+        foreach (BezierCurve _curve in curves)
+        {
+            _curve.SetTrack(points);
+        }
+        //curve.SetTrack(points);
     }
 
     public  void OnClickEndTurn()
