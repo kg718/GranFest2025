@@ -36,6 +36,7 @@ public class TurnManagement : MonoBehaviour
 
     [SerializeField] private AudioSource trackMusic;
     [SerializeField] private AudioSource raceMusic;
+    [SerializeField] private AudioSource VrrrmmmSFX;
 
     void Start()
     {
@@ -199,5 +200,6 @@ public class TurnManagement : MonoBehaviour
         {
             t.gameObject.GetComponent<LineRenderer>().enabled = false;
         }
+        VrrrmmmSFX.Play();
     }
 }
