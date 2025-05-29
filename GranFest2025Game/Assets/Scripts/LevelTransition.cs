@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelTransition : MonoBehaviour
 {
+    [SerializeField] private AudioSource buttonSFX;
     private bool started = false;
 
 
@@ -25,5 +26,10 @@ public class LevelTransition : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(1);
+    }
+
+    public void PlaySFX()
+    {
+        buttonSFX.Play();
     }
 }
