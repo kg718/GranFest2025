@@ -54,6 +54,10 @@ public class Car : MonoBehaviour
             iscrashed = true;
             crashSFX.Play();
         }
+        if(other.gameObject.tag == "End")
+        {
+            FinishGame.instance.FinishTheGame(playerNumber);
+        }
     }
 
     public void OnTriggerExit(Collider other)
