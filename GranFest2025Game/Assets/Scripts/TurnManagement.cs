@@ -15,6 +15,7 @@ public class TurnManagement : MonoBehaviour
     //[SerializeField] private BezierCurve curve;
     [SerializeField] private HazardSpawner hazards;
     [SerializeField] private float playerDrawAmmount;
+    private bool started = false;
 
     [HideInInspector] public float drawAmount1;
     [HideInInspector] public float drawAmount2;
@@ -136,13 +137,14 @@ public class TurnManagement : MonoBehaviour
         {
             currentTurn++;
         }
-        else if(currentTurn == 4)
+        else if(currentTurn == 4 && !started)
         {
             countDown.StartCountDown();
             //StartCars();
             hazards.SpawnHazards();
             raceMusic.Play();
             trackMusic.Pause();
+            started = true;
         }
         UpdateTurnColours();
     }

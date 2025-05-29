@@ -62,6 +62,14 @@ public class Car : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "End")
+        {
+            FinishGame.instance.FinishTheGame(playerNumber);
+        }
+    }
+
     public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Warning")
