@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2e088802029ccf74cad48e601a786f73
+guid: 751a6027fd93d8242a64d07e2b0b3ab4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -24,7 +24,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
-  vTOnly: 1
+  vTOnly: 0
   ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -43,13 +43,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1028
-  spriteBorder: {x: 888, y: 108, z: 898, w: 103}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 243, y: 94, z: 243, w: 98}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -136,22 +136,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Race_Track_ 1_0
+      name: Race_Track_L_0
       rect:
         serializedVersion: 2
-        x: 895
-        y: 99
-        width: 1280
+        x: 258
+        y: 98
+        width: 2556
         height: 1079
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3a9d5ea969388b408b93f19831afc8a
-      internalID: -1490172846
+      spriteID: 69977cb3b39ba2c45b8cad332e3657e8
+      internalID: -945614170
       vertices: []
       indices: 
       edges: []
@@ -167,7 +167,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Race_Track_ 1_0: -1490172846
+      Race_Track_L_0: -945614170
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

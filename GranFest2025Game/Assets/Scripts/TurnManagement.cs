@@ -34,6 +34,9 @@ public class TurnManagement : MonoBehaviour
     [SerializeField] private Image turnImage3;
     [SerializeField] private Image turnImage4;
 
+    [SerializeField] private AudioSource trackMusic;
+    [SerializeField] private AudioSource raceMusic;
+
     void Start()
     {
         instance = this;
@@ -137,6 +140,8 @@ public class TurnManagement : MonoBehaviour
             countDown.StartCountDown();
             //StartCars();
             hazards.SpawnHazards();
+            raceMusic.Play();
+            trackMusic.Pause();
         }
         UpdateTurnColours();
     }
