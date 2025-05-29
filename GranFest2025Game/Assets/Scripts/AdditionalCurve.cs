@@ -24,11 +24,13 @@ public class AdditionalCurve : BezierCurve
 
     public override void StartTrack()
     {
+        fixedUpdateCanRun = true;
+
         if (canRun)
         {
             
 
-            StartCoroutine(followTrack());
+            //StartCoroutine(followTrack());
             canRun = false;
         }
     }
@@ -40,8 +42,121 @@ public class AdditionalCurve : BezierCurve
 
         Debug.DrawRay(carObj.transform.position, carObj.transform.position + targetDirection, Color.green);
 
+        if (fixedUpdateCanRun)
+        {
+
+            float lerpX = Mathf.Lerp(lastTargetPosition.x, targetPosition.x, Time.deltaTime);
+            float lerpZ = Mathf.Lerp(lastTargetPosition.z, targetPosition.z, Time.deltaTime);
+
+            carObj.transform.position = new Vector3(lerpX, 0, lerpZ);
+            carObj.transform.rotation = Quaternion.LookRotation(targetDirection);
+
+        }
+
+    }
+    private void FixedUpdate()
+    {
+
+        if (fixedUpdateCanRun)
+        {
+            if (tTime >= 0.98f)
+            {
+                var newPos = indexCount + 3;
+
+
+                if (points.Length > newPos + 1 && points.Length > newPos + 3)
+                {
+                    updateCurvePath();
+                }
+                else
+                {
+                    fixedUpdateCanRun = false;
+                }
+                if (isObstructed)
+                {
+
+                    fixedUpdateCanRun = false;
+
+                }
+            }
+            float speedStep = calSpeed();
+            float distPoint = calPointDistance();
+            tTime += Time.fixedDeltaTime * speed / distPoint;
+
+            tTime = Mathf.Clamp(tTime, 0, 1);
+
+            Vector3 p0 = points[indexCount + 0].position;
+            Vector3 p1 = points[indexCount + 1].position;
+            Vector3 p2 = points[indexCount + 2].position;
+            Vector3 p3 = points[indexCount + 3].position;
+
+            lastTargetPosition = targetPosition;
+
+            targetDirection = calBezCurve(tTime, p0, p1, p2, p3);
+
+            targetPosition = calBezPoint(tTime, p0, p1, p2, p3);
+
+            //carObj.transform.position = targetPosition;
+            //carObj.transform.rotation = Quaternion.LookRotation(targetDirection);
+        }
+
     }
 
+
+    void updateCurvePath()
+    {
+        indexCount += 3;
+        tTime = 0;
+    }
+
+    float calPointDistance()
+    {
+
+
+        float T = (tTime / 4) * 10;
+        T = Mathf.FloorToInt(T);
+
+        print("tTime " + tTime);
+        print("T " + T);
+
+        var dist = 1.0f;
+
+        switch (T)
+        {
+            case 0:
+                var p0 = points[indexCount].position;
+                var p1 = points[indexCount + 1].position;
+                dist = Mathf.Sqrt((p1.x - p0.x) * (p1.x - p0.x) + ((p1.z - p0.z) * (p1.z - p0.z)));
+                print(dist + " case 0 dist");
+
+                break;
+            case 1:
+                p1 = points[indexCount + 1].position;
+                var p2 = points[indexCount + 2].position;
+                dist = Mathf.Sqrt((p2.x - p1.x) * (p2.x - p1.x) + ((p2.z - p1.z) * (p2.z - p1.z)));
+                print(dist + " case 1 dist");
+                break;
+            case 2:
+                p2 = points[indexCount + 2].position;
+                var p3 = points[indexCount + 3].position;
+                dist = Mathf.Sqrt((p3.x - p2.x) * (p3.x - p2.x) + ((p3.z - p2.z) * (p3.z - p2.z)));
+                print(dist + " case 2 dist");
+
+                break;
+            case 3:
+                p3 = points[indexCount + 3].position;
+                var p4 = points[indexCount + 4].position;
+                dist = Mathf.Sqrt((p4.x - p3.x) * (p4.x - p3.x) + ((p4.z - p3.z) * (p4.z - p3.z)));
+                print(dist + " case 3 dist");
+
+                break;
+        }
+
+        //print("dist " + dist);
+        dist *= 10;
+        return dist;
+
+    }
 
     private void SetLineRenderer()
     {

@@ -38,9 +38,9 @@ public class BezierCurve : MonoBehaviour
 
     protected float savedElapsedTime = 0;
 
-    private float tTime = 0;
+    protected float tTime = 0;
 
-    private bool fixedUpdateCanRun = false;
+    protected bool fixedUpdateCanRun = false;
 
     private void Awake()
     {
