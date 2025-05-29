@@ -171,7 +171,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 507070727}
   duration: 0.5
-  speed: 0.02
+  speed: 0.001
   isObstructed: 0
 --- !u!120 &31757001
 LineRenderer:
@@ -1533,7 +1533,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 357721363}
   duration: 0.5
-  speed: 0.02
+  speed: 0.001
   isObstructed: 0
 --- !u!120 &562119138
 LineRenderer:
@@ -2789,7 +2789,7 @@ MonoBehaviour:
   points: []
   carObj: {fileID: 1979782139}
   duration: 0.5
-  speed: 0.005
+  speed: 0.001
   isObstructed: 0
 --- !u!120 &998261808
 LineRenderer:
@@ -2838,7 +2838,7 @@ LineRenderer:
   - {x: -100, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.6
     widthCurve:
       serializedVersion: 2
       m_Curve:
