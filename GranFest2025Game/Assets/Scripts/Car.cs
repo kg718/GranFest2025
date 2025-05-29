@@ -12,6 +12,7 @@ public class Car : MonoBehaviour
     QTEManagement.StopHazardDelegate stopHazard;
     private bool iscrashed = false;
     [SerializeField] private AudioSource crashSFX;
+    [SerializeField] private Animator carAnimator;
 
     private void Start()
     {
@@ -53,6 +54,7 @@ public class Car : MonoBehaviour
             currentCrashTime = CrashTime;
             iscrashed = true;
             crashSFX.Play();
+            carAnimator.Play("Car_Spin");
         }
         if(other.gameObject.tag == "End")
         {
@@ -82,6 +84,7 @@ public class Car : MonoBehaviour
             curve.isObstructed = false;
             curve.StartTrack();
             iscrashed = false;
+            carAnimator.Play("Car_Idle");
         }
     }
 }
